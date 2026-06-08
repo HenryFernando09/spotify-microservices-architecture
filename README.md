@@ -15,7 +15,7 @@ Implementar una arquitectura distribuida utilizando microservicios desarrollados
 
 ## Tecnologías utilizadas
 
-* Python 3
+* Python 
 * Flask
 * Docker
 * Docker Compose
