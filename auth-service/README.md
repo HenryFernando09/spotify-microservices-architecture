@@ -1,11 +1,15 @@
 # Auth Service
 
-Microservicio encargado de la autenticación de usuarios dentro de la arquitectura de microservicios del proyecto.
+Microservicio encargado de la autenticación de usuarios dentro de la arquitectura de microservicios del proyecto Spotify Microservices Architecture.
 
-## Funcionalidades iniciales
+## Funcionalidades implementadas
 
 * Verificación del estado del servicio
-* Respuesta HTTP básica mediante Flask
+* Consulta de usuarios registrados
+* Registro de usuarios
+* Inicio de sesión
+* Comunicación HTTP mediante Flask
+* Intercambio de datos en formato JSON
 
 ## Tecnologías
 
@@ -25,6 +29,7 @@ Respuesta:
   "status": "running"
 }
 
+
 ### Consulta de usuarios
 
 GET http://127.0.0.1:5000/users
@@ -34,22 +39,28 @@ GET http://127.0.0.1:5000/users
 
 POST http://127.0.0.1:5000/register
 
-Body:
+Body JSON:
 
 {
   "username": "henry",
   "password": "123456"
 }
+
+
 
 ### Inicio de sesión
 
 POST http://127.0.0.1:5000/login
 
-Body:
+Body JSON:
 
 {
   "username": "henry",
   "password": "123456"
 }
 
-Nota: Los endpoints POST /register y /login deben probarse con Thunder Client ya que requieren enviar datos JSON en el cuerpo de la solicitud.
+
+
+## Nota
+
+Los endpoints POST `/register` y `/login` deben probarse utilizando Thunder Client o Postman, ya que requieren el envío de datos JSON en el cuerpo de la solicitud HTTP.
