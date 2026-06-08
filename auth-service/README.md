@@ -64,3 +64,23 @@ Body JSON:
 ## Nota
 
 Los endpoints POST `/register` y `/login` deben probarse utilizando Thunder Client o Postman, ya que requieren el envío de datos JSON en el cuerpo de la solicitud HTTP.
+
+## Ejecución con Docker
+
+Construir la imagen:
+
+```bash
+sudo docker build -t auth-service .
+```
+
+Ejecutar el contenedor:
+
+```bash
+sudo docker run -p 5000:5000 auth-service
+```
+
+Luego acceder a:
+
+```text
+http://127.0.0.1:5000/
+```
