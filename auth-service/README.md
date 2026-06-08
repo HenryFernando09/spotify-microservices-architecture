@@ -52,4 +52,4 @@ Body:
   "password": "123456"
 }
 
-Nota: Los endpoints POST /register y /login deben probarse con Thunder Client, Postman o curl, ya que requieren enviar datos JSON en el cuerpo de la solicitud.
+Nota: Los endpoints POST /register y /login deben probarse con Thunder Client ya que requieren enviar datos JSON en el cuerpo de la solicitud.
