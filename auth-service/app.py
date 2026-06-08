@@ -59,8 +59,15 @@ def login():
 
 @app.route("/users", methods=["GET"])
 def get_users():
+    usernames = []
+
+    for user in users:
+        usernames.append({
+            "username": user["username"]
+        })
+
     return jsonify({
-        "users": users
+        "users": usernames
     })
 
 if __name__ == "__main__":
