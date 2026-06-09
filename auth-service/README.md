@@ -84,3 +84,16 @@ Luego acceder a:
 ```text
 http://127.0.0.1:5000/
 ```
+
+## Validación en Ubuntu Server mediante Docker
+
+El microservicio Auth Service fue exportado como imagen Docker utilizando un archivo `.tar` y posteriormente ejecutado exitosamente en una máquina virtual Ubuntu Server sin necesidad de instalar Python ni Flask manualmente.
+
+Se validó el correcto funcionamiento de los siguientes endpoints:
+
+- GET /
+- GET /users
+- POST /register
+- POST /login
+
+La validación se realizó utilizando comandos `curl` directamente desde Ubuntu Server, comprobando la portabilidad y encapsulamiento del entorno mediante Docker.
