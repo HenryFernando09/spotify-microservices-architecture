@@ -1,8 +1,24 @@
 from flask import Flask, request, jsonify
+import sqlite3
 
 app = Flask(__name__)
 
-users = []
+def init_db():
+    conn = sqlite3.connect("auth.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL
+        )
+    """)
+
+    conn.commit()
+    conn.close()
+
+init_db()
 
 @app.route("/")
 def home():
@@ -23,16 +39,29 @@ def register():
             "message": "Username and password are required"
         }), 400
 
-    for user in users:
-        if user["username"] == username:
-            return jsonify({
-                "message": "User already exists"
-            }), 409
+    conn = sqlite3.connect("auth.db")
+    cursor = conn.cursor()
 
-    users.append({
-        "username": username,
-        "password": password
-    })
+    cursor.execute(
+        "SELECT * FROM users WHERE username = ?",
+        (username,)
+    )
+
+    existing_user = cursor.fetchone()
+
+    if existing_user:
+        conn.close()
+        return jsonify({
+            "message": "User already exists"
+        }), 409
+
+    cursor.execute(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        (username, password)
+    )
+
+    conn.commit()
+    conn.close()
 
     return jsonify({
         "message": "User registered successfully",
@@ -46,12 +75,23 @@ def login():
     username = data.get("username")
     password = data.get("password")
 
-    for user in users:
-        if user["username"] == username and user["password"] == password:
-            return jsonify({
-                "message": "Login successful",
-                "user": username
-            }), 200
+    conn = sqlite3.connect("auth.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM users WHERE username = ? AND password = ?",
+        (username, password)
+    )
+
+    user = cursor.fetchone()
+
+    conn.close()
+
+    if user:
+        return jsonify({
+            "message": "Login successful",
+            "user": username
+        }), 200
 
     return jsonify({
         "message": "Invalid credentials"
@@ -59,11 +99,19 @@ def login():
 
 @app.route("/users", methods=["GET"])
 def get_users():
+    conn = sqlite3.connect("auth.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT username FROM users")
+    users = cursor.fetchall()
+
+    conn.close()
+
     usernames = []
 
     for user in users:
         usernames.append({
-            "username": user["username"]
+            "username": user[0]
         })
 
     return jsonify({
