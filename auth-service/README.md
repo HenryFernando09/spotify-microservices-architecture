@@ -97,3 +97,19 @@ Se validó el correcto funcionamiento de los siguientes endpoints:
 - POST /login
 
 La validación se realizó utilizando comandos `curl` directamente desde Ubuntu Server, comprobando la portabilidad y encapsulamiento del entorno mediante Docker.
+
+## Integración de SQLite y persistencia de datos
+
+El microservicio `auth-service` fue actualizado para incorporar SQLite como sistema de almacenamiento local persistente, reemplazando el uso temporal de estructuras en memoria. Para ello, se implementó la creación automática de la base de datos `auth.db` y de la tabla `users` mediante la librería `sqlite3` integrada en Python.
+
+Los endpoints `/register`, `/login` y `/users` fueron modificados para interactuar directamente con la base de datos, permitiendo registrar usuarios, validar credenciales y consultar información almacenada de manera persistente.
+
+Durante las pruebas funcionales se validó correctamente:
+
+* Registro de usuarios mediante `POST /register`
+* Inicio de sesión mediante `POST /login`
+* Consulta de usuarios mediante `GET /users`
+* Persistencia de datos después de reiniciar Flask
+
+Asimismo, el archivo `auth.db` fue excluido del repositorio GitHub utilizando `.gitignore`, debido a que corresponde a una base de datos local utilizada únicamente para pruebas y validaciones del microservicio.
+
