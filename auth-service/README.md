@@ -113,3 +113,21 @@ Durante las pruebas funcionales se validó correctamente:
 
 Asimismo, el archivo `auth.db` fue excluido del repositorio GitHub utilizando `.gitignore`, debido a que corresponde a una base de datos local utilizada únicamente para pruebas y validaciones del microservicio.
 
+## Implementación de seguridad y hash de contraseñas
+
+El `auth-service` fue actualizado para incorporar mecanismos básicos de seguridad en el manejo de credenciales utilizando la librería `werkzeug.security` de Python.
+
+Para ello, se implementaron las funciones `generate_password_hash()` y `check_password_hash()` con el objetivo de evitar el almacenamiento de contraseñas en texto plano dentro de la base de datos SQLite.
+
+El endpoint `/register` fue modificado para cifrar automáticamente las contraseñas antes de almacenarlas en la tabla `users`, mientras que el endpoint `/login` fue actualizado para validar credenciales utilizando comparación segura mediante hash.
+
+Durante las pruebas funcionales se validó correctamente:
+
+* Registro de usuarios con contraseñas cifradas
+* Inicio de sesión exitoso con validación hash
+* Rechazo de credenciales incorrectas
+* Almacenamiento seguro utilizando algoritmos `scrypt`
+
+Asimismo, se verificó mediante consultas SQLite que los nuevos usuarios registrados almacenan contraseñas cifradas en lugar de texto plano, mejorando significativamente la seguridad del microservicio.
+
+
