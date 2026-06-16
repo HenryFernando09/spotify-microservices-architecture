@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
 app = Flask(__name__)
@@ -55,9 +56,11 @@ def register():
             "message": "User already exists"
         }), 409
 
+    hashed_password = generate_password_hash(password)
+
     cursor.execute(
-        "INSERT INTO users (username, password) VALUES (?, ?)",
-        (username, password)
+    "INSERT INTO users (username, password) VALUES (?, ?)",
+    (username, hashed_password)
     )
 
     conn.commit()
@@ -79,15 +82,15 @@ def login():
     cursor = conn.cursor()
 
     cursor.execute(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        (username, password)
+        "SELECT * FROM users WHERE username = ?",
+        (username,)
     )
 
     user = cursor.fetchone()
 
     conn.close()
 
-    if user:
+    if user and check_password_hash(user[2], password):
         return jsonify({
             "message": "Login successful",
             "user": username
