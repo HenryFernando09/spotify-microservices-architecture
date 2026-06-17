@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  playlist-service:
+    build: .
+    container_name: playlist-service
+    ports:
+      - "8002:8000"
+    environment:
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_HOST=mysql-playlist
+      - DB_PORT=3306
+      - DB_NAME=playlist_db
+    depends_on:
+      - mysql-playlist
+  mysql-playlist:
+    image: mysql:8.0
+    container_name: mysql-playlist
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=playlist_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_playlist_data:/var/lib/mysql
+volumes:
+  mysql_playlist_data:
