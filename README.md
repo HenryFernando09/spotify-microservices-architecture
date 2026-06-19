@@ -1,10 +1,10 @@
-# 🎵 Spotify Microservices Architecture
+# Spotify Microservices Architecture
 
 Proyecto académico basado en una arquitectura de microservicios inspirada en plataformas de streaming musical como Spotify.
 
 ---
 
-# 📌 Objetivo
+# Objetivo
 
 Implementar una arquitectura distribuida utilizando microservicios desarrollados en Python y Flask, integrando tecnologías modernas como Docker, Docker Compose, GitHub, Kafka y Ubuntu Server.
 
@@ -19,7 +19,7 @@ El proyecto busca aplicar conceptos de:
 
 ---
 
-# 🧩 Arquitectura del Proyecto
+#  Arquitectura del Proyecto
 
 El sistema está dividido en varios microservicios independientes:
 
@@ -32,7 +32,7 @@ El sistema está dividido en varios microservicios independientes:
 
 ---
 
-# 🛠️ Tecnologías Utilizadas
+#  Tecnologías Utilizadas
 
 - Python 3
 - Flask
@@ -46,7 +46,7 @@ El sistema está dividido en varios microservicios independientes:
 
 ---
 
-# 🐳 Contenedorización
+#  Contenedorización
 
 Cada microservicio se ejecuta dentro de un contenedor Docker independiente, permitiendo:
 
@@ -57,7 +57,7 @@ Cada microservicio se ejecuta dentro de un contenedor Docker independiente, perm
 
 ---
 
-# 🔐 Seguridad Implementada
+#  Seguridad Implementada
 
 ## Vulnerabilidades identificadas
 
@@ -78,7 +78,7 @@ Durante el desarrollo del proyecto se detectaron algunas vulnerabilidades en el 
 
 ---
 
-# 📂 Estructura del Proyecto
+#  Estructura del Proyecto
 
 ```bash
 spotify-microservices-architecture/
@@ -95,7 +95,7 @@ spotify-microservices-architecture/
 
 ---
 
-# ⚙️ Ejecución del Proyecto
+#  Ejecución del Proyecto
 
 ## Clonar repositorio
 
@@ -111,9 +111,9 @@ docker-compose up --build
 
 ---
 
-# 📊 Estado del Proyecto
+#  Estado del Proyecto
 
-🚧 Proyecto en desarrollo académico.
+ Proyecto en desarrollo académico.
 
 Actualmente se encuentra en implementación de:
 
@@ -124,16 +124,12 @@ Actualmente se encuentra en implementación de:
 
 ---
 
-# 👥 Integrantes
+#  Integrantes
 
-- Henry Fernando Ollero Mallma
+- Henry 
 - Leidy
 - Jersy
 - Mijael
 
 ---
 
-# 📘 Curso
-
-Arquitectura de Tecnologías de Información  
-Universidad Científica del Sur
