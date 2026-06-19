@@ -120,7 +120,6 @@ Actualmente se encuentra en implementación de:
 - Comunicación entre microservicios
 - Monitoreo con Grafana
 - Integración con Kafka
-- Seguridad y autenticación
 
 ---
 
