@@ -100,7 +100,7 @@ spotify-microservices-architecture/
 ## Clonar repositorio
 
 ```bash
-git clone https://github.com/TU-USUARIO/spotify-microservices-architecture.git
+git clone https://github.com/HenryFernando09/spotify-microservices-architecture.git
 ```
 
 ## Levantar contenedores
