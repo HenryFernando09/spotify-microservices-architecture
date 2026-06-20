@@ -8,8 +8,12 @@ Microservicio encargado de la autenticación de usuarios dentro de la arquitectu
 * Consulta de usuarios registrados
 * Registro de usuarios
 * Inicio de sesión
+* Persistencia de datos mediante SQLite
+* Cifrado seguro de contraseñas mediante hash `scrypt`
 * Comunicación HTTP mediante Flask
 * Intercambio de datos en formato JSON
+* Contenerización mediante Docker
+* Orquestación mediante Docker Compose
 
 ## Tecnologías
 
@@ -129,5 +133,21 @@ Durante las pruebas funcionales se validó correctamente:
 * Almacenamiento seguro utilizando algoritmos `scrypt`
 
 Asimismo, se verificó mediante consultas SQLite que los nuevos usuarios registrados almacenan contraseñas cifradas en lugar de texto plano, mejorando significativamente la seguridad del microservicio.
+
+## Ejecución con Docker Compose
+
+Levantar el microservicio utilizando Docker Compose:
+
+```bash
+sudo docker compose up --build
+```
+
+El servicio quedará disponible en:
+
+```text
+http://127.0.0.1:5000/
+```
+
+Docker Compose permite automatizar la construcción y despliegue del contenedor `auth-service` mediante el archivo `docker-compose.yml`.
 
 
