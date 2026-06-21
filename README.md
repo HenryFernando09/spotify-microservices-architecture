@@ -132,7 +132,7 @@ Actualmente se encuentra en implementación de:
 
 ---
 
-## 📊 Monitoreo y Observabilidad
+##  Monitoreo y Observabilidad
 
 El proyecto implementa monitoreo en tiempo real utilizando Prometheus y Grafana desplegados mediante Docker Compose sobre Ubuntu Server.
 
