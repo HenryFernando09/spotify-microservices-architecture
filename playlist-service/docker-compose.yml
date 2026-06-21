@@ -1,4 +1,5 @@
 version: "3.8"
+
 services:
   playlist-service:
     build: .
@@ -12,7 +13,9 @@ services:
       - DB_PORT=3306
       - DB_NAME=playlist_db
     depends_on:
-      - mysql-playlist
+      mysql-playlist:
+        condition: service_healthy
+
   mysql-playlist:
     image: mysql:8.0
     container_name: mysql-playlist
@@ -23,5 +26,11 @@ services:
       - "3307:3306"
     volumes:
       - mysql_playlist_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
 volumes:
   mysql_playlist_data:

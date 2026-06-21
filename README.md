@@ -2,31 +2,157 @@
 
 Proyecto académico basado en una arquitectura de microservicios inspirada en plataformas de streaming musical como Spotify.
 
-## Objetivo
+---
 
-Implementar una arquitectura distribuida utilizando microservicios desarrollados en Python y Flask, integrando tecnologías como Docker, GitHub y Ubuntu Server.
+# Objetivo
 
-## Microservicios
+Implementar una arquitectura distribuida utilizando microservicios desarrollados en Python y Flask, integrando tecnologías modernas como Docker, Docker Compose, GitHub, Kafka y Ubuntu Server.
 
-* Auth Service
-* Music Service
-* Playlist Service
-* Notification Service
+El proyecto busca aplicar conceptos de:
 
-## Tecnologías utilizadas
+- Arquitectura de Microservicios
+- Contenedores Docker
+- Comunicación entre servicios
+- Seguridad básica en APIs
+- Monitoreo y escalabilidad
+- Virtualización en Linux
 
-* Python 3
-* Flask
-* Docker
-* Docker Compose
-* Git
-* GitHub
-* Ubuntu Server
-* Visual Studio Code Remote SSH
+---
 
-## Estado actual del proyecto
+#  Arquitectura del Proyecto
 
-* Infraestructura inicial completada
-* Integración con GitHub realizada
-* Auth Service implementado y funcional
-* Primeros commits y pruebas ejecutadas correctamente
+El sistema está dividido en varios microservicios independientes:
+
+| Microservicio | Función |
+|---|---|
+| Auth Service | Registro y autenticación de usuarios |
+| Music Service | Gestión de canciones |
+| Playlist Service | Administración de playlists |
+| Notification Service | Simulación de notificaciones |
+
+---
+
+#  Tecnologías Utilizadas
+
+- Python 3
+- Flask
+- Docker
+- Docker Compose
+- Ubuntu Server
+- Git & GitHub
+- Apache Kafka
+- Grafana
+- SQLite
+
+---
+
+#  Contenedorización
+
+Cada microservicio se ejecuta dentro de un contenedor Docker independiente, permitiendo:
+
+- Aislamiento de servicios
+- Escalabilidad
+- Fácil despliegue
+- Portabilidad del sistema
+
+---
+
+#  Seguridad Implementada
+
+## Vulnerabilidades identificadas
+
+Durante el desarrollo del proyecto se detectaron algunas vulnerabilidades en el `auth-service`.
+
+### Problemas encontrados
+
+- Contraseñas almacenadas en texto plano
+- Comunicación HTTP sin cifrado
+- Falta de validaciones de seguridad
+
+### Soluciones aplicadas
+
+- Implementación de hash de contraseñas con `werkzeug.security`
+- Uso de `generate_password_hash()`
+- Validación segura con `check_password_hash()`
+- Recomendación de implementación HTTPS con SSL/TLS
+
+---
+
+#  Estructura del Proyecto
+
+```bash
+spotify-microservices-architecture/
+│
+├── auth-service/
+├── music-service/
+├── playlist-service/
+├── notification-service/
+├── docker/
+├── docs/
+├── evidencias/
+└── README.md
+```
+
+---
+
+#  Ejecución del Proyecto
+
+## Clonar repositorio
+
+```bash
+git clone https://github.com/HenryFernando09/spotify-microservices-architecture.git
+```
+
+## Levantar contenedores
+
+```bash
+docker-compose up --build
+```
+
+---
+
+#  Estado del Proyecto
+
+ Proyecto en desarrollo académico.
+
+Actualmente se encuentra en implementación de:
+
+- Comunicación entre microservicios
+- Monitoreo con Grafana
+- Integración con Kafka
+
+---
+
+#  Integrantes
+
+- Henry 
+- Leidy
+- Jersy
+- Mijael
+
+---
+
+##  Monitoreo y Observabilidad
+
+El proyecto implementa monitoreo en tiempo real utilizando Prometheus y Grafana desplegados mediante Docker Compose sobre Ubuntu Server.
+
+### Componentes implementados
+
+* Prometheus
+* Grafana
+* Node Exporter
+* cAdvisor
+* Docker Network
+
+### Métricas monitoreadas
+
+* Uso de CPU
+* Uso de memoria RAM
+* Estado de microservicios
+* Contenedores activos
+* Tráfico de red
+
+### Objetivo de la implementación
+
+Para esta implementación se realizó el monitoreo completo del microservicio `auth-service` como ejemplo funcional de integración entre Docker, Prometheus y Grafana. Los demás microservicios pueden incorporar el mismo mecanismo de métricas siguiendo la misma arquitectura de monitoreo.
+

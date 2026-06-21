@@ -1,0 +1,10 @@
+services:
+  auth-service:
+    build: .
+    container_name: auth-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./auth.db:/app/auth.db
+    restart: unless-stopped
+    
