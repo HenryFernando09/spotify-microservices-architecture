@@ -132,3 +132,27 @@ Actualmente se encuentra en implementación de:
 
 ---
 
+## 📊 Monitoreo y Observabilidad
+
+El proyecto implementa monitoreo en tiempo real utilizando Prometheus y Grafana desplegados mediante Docker Compose sobre Ubuntu Server.
+
+### Componentes implementados
+
+* Prometheus
+* Grafana
+* Node Exporter
+* cAdvisor
+* Docker Network
+
+### Métricas monitoreadas
+
+* Uso de CPU
+* Uso de memoria RAM
+* Estado de microservicios
+* Contenedores activos
+* Tráfico de red
+
+### Objetivo de la implementación
+
+Para esta implementación se realizó el monitoreo completo del microservicio `auth-service` como ejemplo funcional de integración entre Docker, Prometheus y Grafana. Los demás microservicios pueden incorporar el mismo mecanismo de métricas siguiendo la misma arquitectura de monitoreo.
+
