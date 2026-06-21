@@ -7,3 +7,4 @@ services:
     volumes:
       - ./auth.db:/app/auth.db
     restart: unless-stopped
+    
