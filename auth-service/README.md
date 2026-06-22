@@ -150,4 +150,33 @@ http://127.0.0.1:5000/
 
 Docker Compose permite automatizar la construcción y despliegue del contenedor `auth-service` mediante el archivo `docker-compose.yml`.
 
+## Integración de Monitoreo
+
+Este microservicio fue integrado con Prometheus y Grafana para realizar monitoreo en tiempo real dentro de la arquitectura de microservicios.
+
+### Endpoint de métricas
+
+```bash
+GET /metrics
+```
+
+### Tecnologías utilizadas
+
+* Prometheus Client
+* Grafana
+* Docker
+* Flask
+
+### Métricas monitoreadas
+
+* Solicitudes de login
+* Solicitudes de registro
+* Estado del servicio
+* Monitoreo del contenedor
+
+### Arquitectura de monitoreo
+
+Las métricas expuestas por este microservicio son recolectadas por Prometheus y posteriormente visualizadas mediante dashboards en Grafana ejecutados en contenedores Docker.
+
+
 
