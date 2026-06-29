@@ -1,9 +1,20 @@
 services:
+  auth-service:
+    build: ./auth-service
+    container_name: auth-service
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./auth-service/auth.db:/app/auth.db
+    restart: unless-stopped
+
   grafana:
     image: grafana/grafana
     container_name: grafana
     ports:
       - "3000:3000"
+    volumes:
+      - grafana-storage:/var/lib/grafana
     restart: unless-stopped
 
   prometheus:
@@ -32,3 +43,13 @@ services:
       - /var/run:/var/run:ro
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+
+  music-service:
+    build: ./music-service
+    container_name: music-service
+    ports:
+      - "5001:5001"
+    restart: unless-stopped
+
+volumes:
+  grafana-storage:
