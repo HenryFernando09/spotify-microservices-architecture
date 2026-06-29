@@ -1,8 +1,12 @@
 from flask import Flask, request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
+from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
+from flask import Response
 
 app = Flask(__name__)
+register_counter = Counter("auth_register_total", "Total de registros")
+login_counter = Counter("auth_login_total", "Total de logins")
 
 def init_db():
     conn = sqlite3.connect("auth.db")
@@ -66,6 +70,8 @@ def register():
     conn.commit()
     conn.close()
 
+    register_counter.inc()
+
     return jsonify({
         "message": "User registered successfully",
         "user": username
@@ -91,6 +97,9 @@ def login():
     conn.close()
 
     if user and check_password_hash(user[2], password):
+
+        login_counter.inc()
+
         return jsonify({
             "message": "Login successful",
             "user": username
@@ -121,6 +130,10 @@ def get_users():
         "users": usernames
     })
 
+@app.route("/metrics")
+def metrics():
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-    
+
