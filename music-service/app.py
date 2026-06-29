@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 def get_connection():
     return mysql.connector.connect(
-        host="172.17.0.3",     
+        host="172.17.0.3",
         port=3306,
         user="root",
         password="music123",
@@ -55,6 +55,7 @@ def add_cancion():
     titulo = data.get("titulo")
     artista = data.get("artista")
     album = data.get("album")
+
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute(
@@ -65,10 +66,26 @@ def add_cancion():
     nuevo_id = cursor.lastrowid
     cursor.close()
     conn.close()
+
     return jsonify({
         "message": "Cancion agregada",
         "cancion": {"id": nuevo_id, "titulo": titulo, "artista": artista, "album": album}
     }), 201
+
+# --- NUEVO: endpoint para eliminar una canción por su id ---
+@app.route('/canciones/<int:id>', methods=['DELETE'])
+def delete_cancion(id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM canciones WHERE id = %s", (id,))
+    conn.commit()
+    filas_afectadas = cursor.rowcount
+    cursor.close()
+    conn.close()
+
+    if filas_afectadas == 0:
+        return jsonify({"message": "Cancion no encontrada"}), 404
+    return jsonify({"message": "Cancion eliminada"}), 200
 
 @app.route('/ui')
 def interfaz():
@@ -88,51 +105,69 @@ h2 { color: #a0aec0; font-size: 1rem; margin-bottom: 14px; }
 .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 input { background: #0f1117; border: 1px solid #2d3748; border-radius: 8px; padding: 10px; color: #e2e8f0; width: 100%; }
 button { background: #1DB954; color: #fff; border: none; border-radius: 8px; padding: 10px; width: 100%; font-weight: 600; cursor: pointer; }
-.song { background: #0f1117; border: 1px solid #2d3748; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
-.song b { color: #1DB954; }
+.song { background: #0f1117; border: 1px solid #2d3748; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.song span { flex: 1; }
+.btn-delete { background: #e53e3e; color: #fff; border: none; border-radius: 6px; padding: 8px 14px;
+              font-weight: 600; cursor: pointer; width: auto; flex-shrink: 0; }
+.btn-delete:hover { background: #c53030; }
 </style>
 </head>
 <body>
 <div class="header">
-<h1>🎵 Music Service - Running</h1>
-<p>Microservicio de canciones · Puerto 5001</p>
+<h1>&#127925; Music Service - Running</h1>
+<p>Microservicio de canciones - Puerto 5001</p>
 </div>
+
 <div class="card">
-<h2>➕ Agregar cancion</h2>
+<h2>Agregar canción</h2>
 <div class="grid">
-<input id="titulo" placeholder="Titulo"/>
-<input id="artista" placeholder="Artista"/>
-<input id="album" placeholder="Album"/>
+<input id="titulo" placeholder="Título">
+<input id="artista" placeholder="Artista">
+<input id="album" placeholder="Álbum">
 </div>
-<button onclick="agregar()">Agregar → POST /canciones</button>
+<button onclick="agregar()">+ Agregar</button>
 </div>
+
 <div class="card">
-<h2>🎧 Canciones en MySQL</h2>
+<h2>Canciones en MySQL</h2>
 <div id="lista">Cargando...</div>
 </div>
+
 <script>
 async function cargar() {
-const res = await fetch("/canciones");
-const data = await res.json();
-document.getElementById("lista").innerHTML = data.canciones.map(c =>
-"<div class=song><b>#" + c.id + "</b> " + c.titulo + " - " + c.artista + " (" + c.album + ")</div>"
-).join("");
+  const res = await fetch('/canciones');
+  const data = await res.json();
+  document.getElementById('lista').innerHTML = data.canciones.map(c =>
+    `<div class="song">
+      <span>${c.titulo} - ${c.artista} (${c.album || ''})</span>
+      <button class="btn-delete" onclick="eliminar(${c.id})">Eliminar</button>
+    </div>`
+  ).join('');
 }
+
+async function eliminar(id) {
+  if (!confirm('¿Eliminar esta canción?')) return;
+  await fetch(`/canciones/${id}`, { method: 'DELETE' });
+  cargar();
+}
+
 async function agregar() {
-const titulo = document.getElementById("titulo").value;
-const artista = document.getElementById("artista").value;
-const album = document.getElementById("album").value;
-if (!titulo || !artista) return;
-await fetch("/canciones", {
-method: "POST",
-headers: {"Content-Type": "application/json"},
-body: JSON.stringify({titulo: titulo, artista: artista, album: album})
-});
-document.getElementById("titulo").value = "";
-document.getElementById("artista").value = "";
-document.getElementById("album").value = "";
-cargar();
+  const titulo = document.getElementById('titulo').value;
+  const artista = document.getElementById('artista').value;
+  const album = document.getElementById('album').value;
+  if (!titulo || !artista) return;
+  await fetch('/canciones', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({titulo, artista, album})
+  });
+  document.getElementById('titulo').value = '';
+  document.getElementById('artista').value = '';
+  document.getElementById('album').value = '';
+  cargar();
 }
+
 cargar();
 </script>
 </body>
